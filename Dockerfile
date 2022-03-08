@@ -1,4 +1,6 @@
 FROM readthedocs/build:ubuntu-20.04-2022.02.16
+ADD VERSION .
+
 
 COPY requirements* /tmp/
 COPY tools/* /usr/local/bin/
@@ -31,18 +33,6 @@ RUN aptitude -y install                          \
         sudo                                    \
         python3-dev
 
-#    # && ln -s /usr/bin/python3 /usr/bin/python                       \
-#    # && ln -s /usr/bin/pip3 /usr/bin/pip                             \
-
-#RUN npm install -g eslint                                       \
-#    && npm install -g typescript                                       \
-#    && npm install -g write-good                                           \
-#    && npm install -g broken-link-checker                           \
-#    && npm install -g jsdoc                                         \
-#    && npm install -g htmlhint                                      \
-#    && npm install -g sitemap-generator-cli                         \
-#    && npm install -g rename
-
 RUN npm install -g eslint \
     && npm install -g typescript \
     && npm install -g broken-link-checker \
@@ -51,9 +41,11 @@ RUN npm install -g eslint \
     && npm install -g sitemap-generator-cli \
     && npm install -g rename
 
+#    && npm install -g write-good                                           \
+
 RUN pip3 install -r /tmp/requirements.txt --ignore-installed
 
-#USER docs
+USER docs
 
 #ENTRYPOINT [ "/entrypoint.sh" ]
 
