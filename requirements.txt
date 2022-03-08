@@ -15,14 +15,13 @@ markupsafe==2.0.1
 pre-commit
 python-pptx
 recommonmark
-sphinx
+sphinx>=3.0
 sphinx-autobuild
 sphinx-copybutton
 sphinx-js
 sphinx-markdown-tables
 sphinx-rtd-theme
 sphinx-tabs
-sphinx>=3.0
 sphinxcontrib-addmetahtml
 sphinxcontrib-blockdiag
 sphinxcontrib-mermaid
