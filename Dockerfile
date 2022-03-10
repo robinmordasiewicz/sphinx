@@ -8,32 +8,24 @@ ADD vale.tgz /bin
 
 USER root
 
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get --yes update
-RUN apt-get --yes upgrade
-
-RUN apt --yes install aptitude
-RUN aptitude -y install libnode-dev                        
-RUN aptitude -y install libnode64
-RUN aptitude -y install node-gyp
-RUN aptitude -y install npm
-RUN aptitude -y install nodejs
-
-#RUN apt-get upgrade --yes nodejs
-
-#RUN apt-get -y install                          \
-RUN aptitude -y install                          \
-        python3-pip                             \
-        musl-dev                                \
-        libuv1                                  \
-        npm                                     \
-        yarn                                    \
-        graphviz                                \
-        sudo                                    \
-        python3-dev
-
-RUN npm install -g eslint \
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
+    && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get --yes update \
+    && apt-get --yes upgrade \
+    && apt --yes install aptitude \
+    && aptitude -y install libnode-dev \
+    && aptitude -y install libnode64 \
+    && aptitude -y install node-gyp \
+    && aptitude -y install npm \
+    && aptitude -y install nodejs \
+    && aptitude -y install python3-pip \
+    && aptitude -y install musl-dev \
+    && aptitude -y install libuv1 \
+    && aptitude -y install yarn \
+    && aptitude -y install graphviz \
+    && aptitude -y install sudo \
+    && aptitude -y install python3-dev \
+    && npm install -g eslint \
     && npm install -g typescript \
     && npm install -g broken-link-checker \
     && npm install -g jsdoc \
