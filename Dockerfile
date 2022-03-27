@@ -37,7 +37,7 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
 
 RUN pip3 install -r /tmp/requirements.txt --ignore-installed
 
-USER docs
+#USER docs
 
 #ENTRYPOINT [ "/entrypoint.sh" ]
 
