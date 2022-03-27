@@ -1,12 +1,12 @@
 FROM readthedocs/build:ubuntu-20.04-2022.02.16
-ADD VERSION .
 
+USER root
+
+ADD VERSION .
 
 COPY requirements* /tmp/
 COPY tools/* /usr/local/bin/
 ADD vale.tgz /bin
-
-USER root
 
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
     && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
