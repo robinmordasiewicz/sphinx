@@ -10,6 +10,11 @@ pipeline {
         kind: Pod
         spec:
           containers:
+          - name: ubuntu
+            image: robinhoodis/ubuntu:latest
+            command:
+            - cat
+            tty: true
           - name: kaniko
             image: gcr.io/kaniko-project/executor:debug
             imagePullPolicy: Always
@@ -39,10 +44,10 @@ pipeline {
     }
     stage('prepare-workspace') {
       steps {
-        git branch: 'main', url: 'https://github.com/robinmordasiewicz/jcasc.git'
+        git branch: 'main', url: 'https://github.com/robinmordasiewicz/jenkins.git'
         sh 'mkdir -p argocd'
         dir ( 'argocd' ) {
-          git branch: 'main', url: 'https://github.com/robinmordasiewicz/argocd.git'
+          git branch: 'main', url: 'https://github.com/robinmordasiewicz/jcasc.git'
         }
       }
     }
@@ -55,13 +60,6 @@ pipeline {
         }
       }
     }
-    stage('build-html') {
-      steps {
-        container('sphinx-build') {
-          sh 'make -C docs clean html'
-        }
-      }
-    }
     stage('Build & Push Image') {
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
@@ -69,12 +67,12 @@ pipeline {
             sh '''
             /kaniko/executor --dockerfile `pwd`/Dockerfile \
                              --context `pwd` \
-                             --destination=robinhoodis/nginx:`cat argocd/VERSION`
+                             --destination=robinhoodis/jenkins:`cat argocd/VERSION`
             '''
             sh '''
             /kaniko/executor --dockerfile `pwd`/Dockerfile \
                              --context `pwd` \
-                             --destination=robinhoodis/nginx:latest
+                             --destination=robinhoodis/jenkins:latest
             '''
           }
         }
@@ -97,7 +95,7 @@ pipeline {
       steps {
         withKubeConfig([credentialsId: 'kubeconfig']) {
           container('ubuntu') {
-            sh 'kubectl apply -f argocd/deployment.yaml --namespace r-mordasiewicz'
+            sh 'helm upgrade --install  argocd/values.yaml --namespace r-mordasiewicz'
           }
         }
       }
