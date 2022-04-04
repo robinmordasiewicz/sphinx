@@ -12,11 +12,11 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
     && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get --yes update \
     && apt-get --yes install apt-utils \
-    && apt-get --yes install npm \
     && apt-get --yes upgrade \
     && apt-get --yes install aptitude python3-docutils="0.16+dfsg-2" \
     && aptitude -y update \
-    && aptitude -y install libnode-dev libnode64 node-gyp npm nodejs musl-dev libuv1 yarn graphviz sudo python3-pip python3-dev python3-testresources \
+    && aptitude -y install npm \
+    && aptitude -y install libnode-dev libnode64 node-gyp nodejs musl-dev libuv1 yarn graphviz sudo python3-pip python3-dev python3-testresources \
     && npm install -g eslint \
     && npm install -g typescript \
     && npm install -g broken-link-checker \
