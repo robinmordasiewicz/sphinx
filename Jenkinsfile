@@ -44,15 +44,15 @@ pipeline {
     }
     stage('prepareWS') {
       steps {
-        sh 'mkdir -p jenkins-container'
-        dir ( 'jenkins-container' ) {
-          git branch: 'main', url: 'https://github.com/robinmordasiewicz/jenkins-container.git'
+        sh 'mkdir -p sphinx-build-container'
+        dir ( 'sphinx-build-container' ) {
+          git branch: 'main', url: 'https://github.com/robinmordasiewicz/sphinx-build-container.git'
         }
       }
     }
 //    stage('bump container version') {
 //      steps {
-//        dir ( 'jenkins-container' ) {
+//        dir ( 'sphinx-build-container' ) {
 //          container('ubuntu') {
 //            sh "sh increment-version.sh"
 //          }
@@ -61,18 +61,18 @@ pipeline {
 //    }
     stage('build container') {
       steps {
-        dir ( 'jenkins-container' ) {
+        dir ( 'sphinx-build-container' ) {
           container(name: 'kaniko', shell: '/busybox/sh') {
             script {
               sh '''
               /kaniko/executor --dockerfile `pwd`/Dockerfile \
                                --context `pwd` \
-                               --destination=robinhoodis/jenkins:`cat VERSION`
+                               --destination=robinhoodis/sphinx-build:`cat VERSION`
               '''
               sh '''
               /kaniko/executor --dockerfile `pwd`/Dockerfile \
                                --context `pwd` \
-                               --destination=robinhoodis/jenkins:latest
+                               --destination=robinhoodis/sphinx-build:latest
               '''
             }
           }
@@ -81,7 +81,7 @@ pipeline {
     }
 //    stage('commit container version') {
 //      steps {
-//        dir ( 'jenkins-container' ) {
+//        dir ( 'sphinx-build-container' ) {
 //          sh 'git config user.email "robin@mordasiewicz.com"'
 //          sh 'git config user.name "Robin Mordasiewicz"'
 //          sh 'git add .'
