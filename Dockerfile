@@ -33,11 +33,5 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
     && npm install -g sitemap-generator-cli \
     && npm install -g rename
 
-#    && npm install -g write-good                                           \
-
 RUN pip3 install -r /tmp/requirements.txt --ignore-installed
-
-#USER docs
-
-#ENTRYPOINT [ "/entrypoint.sh" ]
 
