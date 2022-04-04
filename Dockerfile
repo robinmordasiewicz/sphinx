@@ -25,6 +25,8 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
     && aptitude -y install graphviz \
     && aptitude -y install sudo \
     && aptitude -y install python3-dev \
+    && aptitude -y install python3-testresources \
+    && aptitude -y install python3-docutils \
     && npm install -g eslint \
     && npm install -g typescript \
     && npm install -g broken-link-checker \
