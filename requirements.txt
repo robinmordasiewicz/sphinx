@@ -18,10 +18,8 @@ recommonmark
 sphinx>=3.0
 sphinx-autobuild
 sphinx-copybutton
-sphinx-js
 sphinx-markdown-tables
 sphinx-rtd-theme
-sphinx-tabs
 sphinxcontrib-addmetahtml
 sphinxcontrib-blockdiag
 sphinxcontrib-mermaid
