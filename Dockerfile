@@ -17,7 +17,8 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
     && apt-get --yes install aptitude \
     && aptitude -y update \
     && aptitude -y install npm \
-    && aptitude -y install libnode-dev node-gyp musl-dev libuv1 yarn graphviz sudo python3-pip python3-dev python3-testresources
+    && aptitude -y install libnode-dev node-gyp musl-dev libuv1 yarn graphviz sudo python3-pip python3-dev python3-testresources \
+    && pip3 install -r /tmp/requirements.txt --ignore-installed
 #    && npm install -g eslint \
 #    && npm install -g typescript \
 #    && npm install -g broken-link-checker \
@@ -25,6 +26,4 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
 #    && npm install -g htmlhint \
 #    && npm install -g sitemap-generator-cli \
 #    && npm install -g rename
-
-RUN pip3 install -r /tmp/requirements.txt --ignore-installed
 
