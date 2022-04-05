@@ -12,7 +12,7 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
     && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get --yes update \
     && apt-get --yes install apt-utils \
-    && apt-get --yes install docutils-common="0.17+dfsg-1" python3-docutils="0.17+dfsg-1" \
+    && apt-get --yes install docutils-common="0.16+dfsg-2" python3-docutils="0.16+dfsg-2" \
     && apt-get --yes upgrade \
     && apt-get --yes install aptitude \
     && aptitude -y update \
