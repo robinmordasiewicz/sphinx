@@ -1,4 +1,4 @@
-FROM readthedocs/build:ubuntu-20.04-2022.02.16
+FROM readthedocs/build:ubuntu-22.04-2022.03.15
 
 USER root
 
