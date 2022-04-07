@@ -64,11 +64,6 @@ pipeline {
         }
       }
     }
-    stage('clean up') {
-      steps {
-        sh 'rm -rf make-html'
-      }
-    }
   }
 //  post {
 //    always {
