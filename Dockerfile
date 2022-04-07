@@ -2,9 +2,9 @@ FROM readthedocs/build:ubuntu-22.04-2022.03.15
 
 USER root
 
-COPY requirements* /tmp/
-COPY tools/* /usr/local/bin/
-ADD vale.tgz /bin
+COPY requirements.txt /tmp/
+#COPY tools/* /usr/local/bin/
+#ADD vale.tgz /bin
 
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
     && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
@@ -12,7 +12,8 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
     && apt-get --yes install apt-utils \
     && apt-get --yes install docutils-common="0.16+dfsg-2" python3-docutils="0.16+dfsg-2" \
     && apt-mark hold docutils-common \
-    && apt-mark hold python3-docutils
+    && apt-mark hold python3-docutils \
+    && pip3 install -r /tmp/requirements.txt --ignore-installed
 
 
 #    && apt-get --yes upgrade \
