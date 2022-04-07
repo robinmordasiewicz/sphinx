@@ -42,22 +42,22 @@ pipeline {
         }
       }
     }
-    stage('create new manifest') {
+    stage('increment sphinx-build container version') {
       steps {
-        sh 'mkdir argocd'
-        dir ( 'argocd' ) {
-          git branch: 'main', url: 'https://github.com/robinmordasiewicz/argocd.git'
+        sh 'mkdir make-html'
+        dir ( 'make-html' ) {
+          git branch: 'main', url: 'https://github.com/robinmordasiewicz/make-html.git'
           sh 'sh increment-version.sh'
         }
       }
     }
-    stage('commit new manifest') {
+    stage('commit sphinx-build container version') {
       steps {
-        dir ( 'argocd' ) {
+        dir ( 'make-html' ) {
           sh 'git config user.email "robin@mordasiewicz.com"'
           sh 'git config user.name "Robin Mordasiewicz"'
           sh 'git add .'
-          sh 'git commit -m "`cat sphinx/VERSION`"'
+          sh 'git commit -m "`cat ../VERSION`"'
           withCredentials([gitUsernamePassword(credentialsId: 'github-pat', gitToolName: 'git')]) {
             sh '/usr/bin/git push origin main'
           }
@@ -66,7 +66,7 @@ pipeline {
     }
     stage('clean up') {
       steps {
-        sh 'rm -rf argocd'
+        sh 'rm -rf make-html'
       }
     }
   }
