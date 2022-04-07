@@ -35,8 +35,7 @@ pipeline {
             /kaniko/executor --dockerfile=Dockerfile \
                              --context=git://github.com/robinmordasiewicz/sphinx-container.git \
                              --destination=robinhoodis/sphinx:`cat VERSION` \
-                             --destination=robinhoodis/sphinx:latest \
-                             --skip-tls-verify
+                             --destination=robinhoodis/sphinx:latest
             '''
           }
         }
