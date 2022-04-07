@@ -2,8 +2,6 @@ FROM readthedocs/build:ubuntu-22.04-2022.03.15
 
 USER root
 
-ADD VERSION .
-
 COPY requirements* /tmp/
 COPY tools/* /usr/local/bin/
 ADD vale.tgz /bin
