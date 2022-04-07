@@ -15,7 +15,6 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key ad
     && apt-mark hold python3-docutils \
     && pip3 install -r /tmp/requirements.txt --ignore-installed
 
-
 #    && apt-get --yes upgrade \
 #    && apt-get --yes install aptitude \
 #    && aptitude -y update \
