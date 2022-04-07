@@ -41,7 +41,7 @@ pipeline {
         }
       }
     }
-    stage('increment sphinx-build container version') {
+    stage('increment sphinx container version') {
       steps {
         sh 'mkdir make-html'
         dir ( 'make-html' ) {
@@ -50,13 +50,13 @@ pipeline {
         }
       }
     }
-    stage('commit sphinx-build container version') {
+    stage('commit sphinx container version') {
       steps {
         dir ( 'make-html' ) {
           sh 'git config user.email "robin@mordasiewicz.com"'
           sh 'git config user.name "Robin Mordasiewicz"'
           sh 'git add .'
-          sh 'git commit -m "`cat VERSION.sphinx-build-container`"'
+          sh 'git commit -m "`cat VERSION.sphinx-container`"'
           withCredentials([gitUsernamePassword(credentialsId: 'github-pat', gitToolName: 'git')]) {
             sh '/usr/bin/git push origin main'
           }
