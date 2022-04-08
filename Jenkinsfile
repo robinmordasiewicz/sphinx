@@ -36,7 +36,7 @@ pipeline {
           script {
             sh '''
             /kaniko/executor --dockerfile=Dockerfile \
-                             --context=git://github.com/robinmordasiewicz/sphinx-container.git \
+                             --context=git://github.com/robinmordasiewicz/sphinx.git \
                              --destination=robinhoodis/sphinx:`cat VERSION` \
                              --destination=robinhoodis/sphinx:latest
             '''
