@@ -109,7 +109,7 @@ RUN groupadd --gid 205 docs
 RUN useradd -m --uid 1005 --gid 205 docs
 
 COPY requirements.txt /tmp/
-RUN pip3 install -r /tmp/requirements.txt --ignore-installed
+RUN pip install -r /tmp/requirements.txt --ignore-installed
 
 USER docs
 WORKDIR /home/docs
