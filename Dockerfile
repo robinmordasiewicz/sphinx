@@ -108,8 +108,9 @@ RUN apt-get install -y \
 RUN groupadd --gid 205 docs
 RUN useradd -m --uid 1005 --gid 205 docs
 
+RUN apt install -y python3-pip
 COPY requirements.txt /tmp/
-RUN pip install -r /tmp/requirements.txt --ignore-installed
+RUN pip3 install -r /tmp/requirements.txt --ignore-installed
 
 USER docs
 WORKDIR /home/docs
