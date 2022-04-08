@@ -44,7 +44,7 @@ pipeline {
         }
       }
     }
-    stage('increment sphinx container version') {
+    stage('pull sphinx version into make-html repo') {
       steps {
         sh 'mkdir make-html'
         dir ( 'make-html' ) {
@@ -53,7 +53,7 @@ pipeline {
         }
       }
     }
-    stage('commit sphinx container version') {
+    stage('commit changes to the make-html repo') {
       steps {
         dir ( 'make-html' ) {
           sh 'git config user.email "robin@mordasiewicz.com"'
