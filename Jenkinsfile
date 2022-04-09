@@ -62,7 +62,7 @@ pipeline {
           sh 'git add .'
           sh 'git diff --quiet && git diff --staged --quiet || git commit -am "Sphinx Container: `cat VERSION`"'
           withCredentials([gitUsernamePassword(credentialsId: 'github-pat', gitToolName: 'git')]) {
-            sh 'git diff --quiet && git diff --staged --quiet || git push'
+            sh 'git diff --quiet && git diff --staged --quiet || git push origin main'
           }
         }
       }
