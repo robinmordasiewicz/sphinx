@@ -75,19 +75,13 @@ pipeline {
       }
     }
     stage('Commit new VERSION') {
-      when {
-        beforeAgent true
-        anyOf {
-          changeset "Dockerfile"
-          triggeredBy cause: 'UserIdCause'
-        }
-      }
+      when { not changeset "VERSION" }
       steps {
         sh 'git config user.email "robin@mordasiewicz.com"'
         sh 'git config user.name "Robin Mordasiewicz"'
-        // sh 'git add -u'
+        // sh 'git add VERSION'
         // sh 'git diff --quiet && git diff --staged --quiet || git commit -m "`cat VERSION`"'
-        sh 'git add . && git diff --staged --quiet || git commit -m "`cat VERSION`"'
+        sh 'git add VERSION && git diff --staged --quiet || git commit -m "`cat VERSION`"'
         withCredentials([gitUsernamePassword(credentialsId: 'github-pat', gitToolName: 'git')]) {
           // sh 'git diff --quiet && git diff --staged --quiet || git push origin HEAD:main'
           // sh 'git diff --quiet HEAD || git push origin HEAD:main'
