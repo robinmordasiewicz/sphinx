@@ -93,11 +93,6 @@ pipeline {
     }
     stage('Commit new VERSION') {
       when {
-        anyOf {
-          not {changeset "VERSION"} 
-        }
-      }
-      when {
         beforeAgent true
         allOf {
           not {changeset "VERSION"} 
