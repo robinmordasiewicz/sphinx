@@ -46,9 +46,11 @@ pipeline {
     stage('Increment VERSION') {
       when {
         beforeAgent true
-        allOf {
-          // not {changeset "VERSION"} 
-          // not {changeset "Jenkinsfile"}
+        anyof {
+          allOf {
+            not {changeset "VERSION"} 
+            changeset "Dockerfile"
+          }
           triggeredBy cause: 'UserIdCause'
         }
       }
