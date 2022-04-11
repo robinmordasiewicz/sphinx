@@ -48,6 +48,7 @@ pipeline {
         beforeAgent true
         anyOf {
           not {changeset "VERSION"} 
+          not {changeset "Jenkinsfile"} 
         }
       }
       steps {
