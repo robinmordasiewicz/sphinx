@@ -64,6 +64,13 @@ pipeline {
       }
     }
     stage('Build/Push Container') {
+      when {
+        allOf {
+          expression { 
+            sh(returnStatus: true, script: 'git diff origin/master --name-only | grep --quiet "BUILDNEWCONTAINER.txt"') == 1
+          }
+        }
+      }
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           script {
