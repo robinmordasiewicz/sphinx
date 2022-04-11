@@ -146,16 +146,16 @@ pipeline {
       }
     }
     stage('Commit Jenkinsfile to make-html') {
-      when {
-        beforeAgent true
-        anyOf {
-          allOf {
-            not {changeset "VERSION"}
-            changeset "Dockerfile"
-          }
-          triggeredBy cause: 'UserIdCause'
-        }
-      }
+//      when {
+//        beforeAgent true
+//        anyOf {
+//          allOf {
+//            not {changeset "VERSION"}
+//            changeset "Dockerfile"
+//          }
+//          triggeredBy cause: 'UserIdCause'
+//        }
+//      }
       steps {
         dir ( 'make-html' ) {
           sh 'git config user.email "robin@mordasiewicz.com"'
