@@ -68,7 +68,7 @@ pipeline {
         beforeAgent true
         anyOf {
           expression {  // there are changes in some-directory/...
-            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 0
+            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 1
           }
           expression { 
             sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
