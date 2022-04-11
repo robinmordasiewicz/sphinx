@@ -44,7 +44,12 @@ pipeline {
       }
     }
     stage('Increment VERSION') {
-      when { !(changeset "VERSION") }
+      when {
+        beforeAgent true
+        anyOf {
+          not {changeset "VERSION"} 
+        }
+      }
       steps {
         container('ubuntu') {
           sh 'sh increment-version.sh'
@@ -75,7 +80,12 @@ pipeline {
       }
     }
     stage('Commit new VERSION') {
-      when { not changeset "VERSION" }
+      when {
+        beforeAgent true
+        anyOf {
+          not {changeset "VERSION"} 
+        }
+      }
       steps {
         sh 'git config user.email "robin@mordasiewicz.com"'
         sh 'git config user.name "Robin Mordasiewicz"'
