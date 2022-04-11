@@ -97,7 +97,7 @@ pipeline {
         allOf {
           not {changeset "VERSION"} 
           expression {  // there are changes in some-directory/...
-            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 0
+            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
           }
         }
       }
