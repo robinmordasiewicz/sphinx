@@ -97,7 +97,8 @@ pipeline {
         beforeAgent true
         allOf {
           not {changeset "VERSION"} 
-          expression {  // there are changes in some-directory/...
+          not {changeset "Jenkinsfile"} 
+          expression {
             sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
           }
         }
