@@ -65,7 +65,10 @@ pipeline {
     }
     stage('Build/Push Container') {
       when {
-        allOf {
+        anyOf {
+          expression {  // there are changes in some-directory/...
+            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 0
+          }
           expression { 
             // sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 0
             sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
@@ -85,8 +88,8 @@ pipeline {
             '''
           }
         }
+        sh '[ -f BUILDNEWCONTAINER.txt ] && rm BUILDNEWCONTAINER.txt'
       }
-      sh '[ -f BUILDNEWCONTAINER.txt ] && rm BUILDNEWCONTAINER.txt'
     }
     stage('Commit new VERSION') {
       when {
