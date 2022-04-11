@@ -97,9 +97,11 @@ pipeline {
     stage('Commit new VERSION') {
       when {
         beforeAgent true
-        allOf {
-          // not {changeset "VERSION"} 
-          // not {changeset "Jenkinsfile"}
+        anyOf {
+          allOf {
+            not {changeset "VERSION"}
+            changeset "Dockerfile"
+          }
           triggeredBy cause: 'UserIdCause'
         }
       }
@@ -144,16 +146,16 @@ pipeline {
       }
     }
     stage('Commit Jenkinsfile to make-html') {
-   //   when {
-   //     beforeAgent true
-   //     allOf {
-   //       // not {changeset "VERSION"}
-   //       // not {changeset "Jenkinsfile"}
-   //       expression {
-   //         sh(returnStatus: true, script: 'cd make-html && git status --porcelain | grep --quiet "Jenkinsfile"') == 1
-   //       }
-   //     }
-   //   }
+      when {
+        beforeAgent true
+        allOf {
+          // not {changeset "VERSION"}
+          // not {changeset "Jenkinsfile"}
+          expression {
+            sh(returnStatus: true, script: 'cd make-html && git status --porcelain | grep --quiet "Jenkinsfile"') == 1
+          }
+        }
+      }
       steps {
         dir ( 'make-html' ) {
           sh 'git config user.email "robin@mordasiewicz.com"'
