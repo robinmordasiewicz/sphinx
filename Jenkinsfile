@@ -44,13 +44,7 @@ pipeline {
       }
     }
     stage('Increment VERSION') {
-      when {
-        beforeAgent true
-        anyOf {
-          changeset "Dockerfile"
-          triggeredBy cause: 'UserIdCause'
-        }
-      }
+      when { not changeset "VERSION" }
       steps {
         container('ubuntu') {
           sh 'sh increment-version.sh'
@@ -58,14 +52,6 @@ pipeline {
       }
     }
     stage('Check repo for container') {
-      when {
-        beforeAgent true
-        anyOf {
-          changeset "VERSION"
-          changeset "Dockerfile"
-          triggeredBy cause: 'UserIdCause'
-        }
-      }
       steps {
         container('ubuntu') {
           sh 'skopeo inspect docker://docker.io/robinhoodis/sphinx:`cat VERSION` > /dev/null || echo "create new container: `cat VERSION`" > BUILDNEWCONTAINER.txt'
@@ -73,14 +59,6 @@ pipeline {
       }
     }
     stage('Build/Push Container') {
-      when {
-        beforeAgent true
-        anyOf {
-          changeset "VERSION"
-          changeset "Dockerfile"
-          triggeredBy cause: 'UserIdCause'
-        }
-      }
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           script {
