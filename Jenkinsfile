@@ -89,17 +89,19 @@ pipeline {
             '''
           }
         }
-        sh '[ -f BUILDNEWCONTAINER.txt ] && rm BUILDNEWCONTAINER.txt'
       }
     }
     stage('Commit new VERSION') {
       when {
         beforeAgent true
-        allOf {
+        anyOf {
           // not {changeset "VERSION"} 
           // not {changeset "Jenkinsfile"} 
           expression {
             sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
+          }
+          expression {
+            sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
           }
         }
       }
