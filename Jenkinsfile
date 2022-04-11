@@ -133,23 +133,23 @@ pipeline {
       }
     }
     stage('Commit Jenkinsfile to make-html') {
-      when {
-        beforeAgent true
-        allOf {
-          // not {changeset "VERSION"}
-          // not {changeset "Jenkinsfile"}
-          expression {
-            sh(returnStatus: true, script: 'cd make-html && git status --porcelain | grep --quiet "Jenkinsfile"') == 1
-          }
-        }
-      }
+   //   when {
+   //     beforeAgent true
+   //     allOf {
+   //       // not {changeset "VERSION"}
+   //       // not {changeset "Jenkinsfile"}
+   //       expression {
+   //         sh(returnStatus: true, script: 'cd make-html && git status --porcelain | grep --quiet "Jenkinsfile"') == 1
+   //       }
+   //     }
+   //   }
       steps {
         dir ( 'make-html' ) {
           sh 'git config user.email "robin@mordasiewicz.com"'
           sh 'git config user.name "Robin Mordasiewicz"'
-          // sh 'git add Jenkinsfile'
-          // sh 'git diff --quiet && git diff --staged --quiet || git commit -m "`cat ../VERSION`"'
-          sh 'git add Jenkinsfile && git diff --staged --quiet || git commit -m "`cat ../VERSION`"'
+          // sh 'git add .'
+          // sh 'git diff --quiet && git diff --staged --quiet || git commit -m "`cat VERSION`"'
+          sh 'git add . && git diff --staged --quiet || git commit -m "`cat VERSION`"'
           withCredentials([gitUsernamePassword(credentialsId: 'github-pat', gitToolName: 'git')]) {
             // sh 'git diff --quiet && git diff --staged --quiet || git push origin HEAD:main'
             // sh 'git diff --quiet HEAD || git push origin HEAD:main'
