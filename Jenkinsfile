@@ -96,8 +96,8 @@ pipeline {
       when {
         beforeAgent true
         allOf {
-          not {changeset "VERSION"} 
-          not {changeset "Jenkinsfile"} 
+          // not {changeset "VERSION"} 
+          // not {changeset "Jenkinsfile"} 
           expression {
             sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
           }
@@ -113,6 +113,55 @@ pipeline {
           // sh 'git diff --quiet && git diff --staged --quiet || git push origin HEAD:main'
           // sh 'git diff --quiet HEAD || git push origin HEAD:main'
           sh 'git push origin HEAD:main'
+        }
+      }
+    }
+    stage('clone make-html repo') {
+      steps {
+        dir ( 'make-html' ) {
+          git branch: 'main', url: 'https://github.com/robinmordasiewicz/make-html.git'
+        }
+      }
+    }
+    stage('Update make-html Jenkinsfile') {
+      when {
+        beforeAgent true
+        allOf {
+          not {changeset "VERSION"}
+          not {changeset "Jenkinsfile"}
+        }
+      }
+      steps {
+        dir ( 'make-html' ) {
+          container('ubuntu') {
+            sh 'sh increment-version.sh'
+          }
+        }
+      }
+    }
+    stage('Commit new VERSION') {
+      when {
+        beforeAgent true
+        allOf {
+          // not {changeset "VERSION"}
+          // not {changeset "Jenkinsfile"}
+          expression {
+            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
+          }
+        }
+      }
+      steps {
+        dir ( 'make-html' ) {
+          sh 'git config user.email "robin@mordasiewicz.com"'
+          sh 'git config user.name "Robin Mordasiewicz"'
+          // sh 'git add Jenkinsfile'
+          // sh 'git diff --quiet && git diff --staged --quiet || git commit -m "`cat ../VERSION`"'
+          sh 'git add Jenkinsfile && git diff --staged --quiet || git commit -m "`cat ../VERSION`"'
+          withCredentials([gitUsernamePassword(credentialsId: 'github-pat', gitToolName: 'git')]) {
+            // sh 'git diff --quiet && git diff --staged --quiet || git push origin HEAD:main'
+            // sh 'git diff --quiet HEAD || git push origin HEAD:main'
+            sh 'git push origin HEAD:main'
+          }
         }
       }
     }
