@@ -47,8 +47,9 @@ pipeline {
       when {
         beforeAgent true
         allOf {
-          not {changeset "VERSION"} 
-          not {changeset "Jenkinsfile"} 
+          // not {changeset "VERSION"} 
+          // not {changeset "Jenkinsfile"}
+          triggeredBy cause: 'UserIdCause'
         }
       }
       steps {
