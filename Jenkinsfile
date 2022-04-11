@@ -67,7 +67,7 @@ pipeline {
       when {
         allOf {
           expression { 
-            sh(returnStatus: true, script: 'git diff origin/master --name-only | grep --quiet "BUILDNEWCONTAINER.txt"') == 1
+            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 1
           }
         }
       }
