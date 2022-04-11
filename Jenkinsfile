@@ -46,7 +46,7 @@ pipeline {
     stage('Increment VERSION') {
       when {
         beforeAgent true
-        anyOf {
+        allOf {
           not {changeset "VERSION"} 
           not {changeset "Jenkinsfile"} 
         }
