@@ -92,19 +92,19 @@ pipeline {
       }
     }
     stage('Commit new VERSION') {
-      when {
-        beforeAgent true
-        anyOf {
-          // not {changeset "VERSION"} 
-          // not {changeset "Jenkinsfile"} 
-          expression {
-            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
-          }
-          expression {
-            sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
-          }
-        }
-      }
+//      when {
+//        beforeAgent true
+//        anyOf {
+//          // not {changeset "VERSION"} 
+//          // not {changeset "Jenkinsfile"} 
+//          expression {
+//            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
+//          }
+//          expression {
+//            sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
+//          }
+//        }
+//      }
       steps {
         sh 'git config user.email "robin@mordasiewicz.com"'
         sh 'git config user.name "Robin Mordasiewicz"'
