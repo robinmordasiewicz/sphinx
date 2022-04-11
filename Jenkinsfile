@@ -44,7 +44,7 @@ pipeline {
       }
     }
     stage('Increment VERSION') {
-      when { not {changeset "VERSION"} }
+      when { !(changeset "VERSION") }
       steps {
         container('ubuntu') {
           sh 'sh increment-version.sh'
