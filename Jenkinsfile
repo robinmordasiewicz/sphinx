@@ -65,12 +65,12 @@ pipeline {
     }
     stage('Build/Push Container') {
       when {
+        beforeAgent true
         anyOf {
           expression {  // there are changes in some-directory/...
             sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 0
           }
           expression { 
-            // sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 0
             sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
           }
         }
@@ -93,9 +93,17 @@ pipeline {
     }
     stage('Commit new VERSION') {
       when {
-        beforeAgent true
         anyOf {
           not {changeset "VERSION"} 
+        }
+      }
+      when {
+        beforeAgent true
+        allOf {
+          not {changeset "VERSION"} 
+          expression {  // there are changes in some-directory/...
+            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 0
+          }
         }
       }
       steps {
