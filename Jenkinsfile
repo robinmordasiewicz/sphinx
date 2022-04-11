@@ -124,13 +124,6 @@ pipeline {
       }
     }
     stage('Update make-html Jenkinsfile') {
-      when {
-        beforeAgent true
-        allOf {
-          not {changeset "VERSION"}
-          not {changeset "Jenkinsfile"}
-        }
-      }
       steps {
         dir ( 'make-html' ) {
           container('ubuntu') {
@@ -146,7 +139,7 @@ pipeline {
           // not {changeset "VERSION"}
           // not {changeset "Jenkinsfile"}
           expression {
-            sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "VERSION"') == 1
+            sh(returnStatus: true, script: 'cd make-html && git status --porcelain | grep --quiet "Jenkinsfile"') == 1
           }
         }
       }
