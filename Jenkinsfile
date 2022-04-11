@@ -148,12 +148,12 @@ pipeline {
     stage('Commit Jenkinsfile to make-html') {
       when {
         beforeAgent true
-        allOf {
-          // not {changeset "VERSION"}
-          // not {changeset "Jenkinsfile"}
-          expression {
-            sh(returnStatus: true, script: 'cd make-html && git status --porcelain | grep --quiet "Jenkinsfile"') == 1
+        anyOf {
+          allOf {
+            not {changeset "VERSION"}
+            changeset "Dockerfile"
           }
+          triggeredBy cause: 'UserIdCause'
         }
       }
       steps {
