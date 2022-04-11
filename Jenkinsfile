@@ -139,7 +139,7 @@ pipeline {
         }
       }
     }
-    stage('Commit new VERSION') {
+    stage('Commit Jenkinsfile to make-html') {
       when {
         beforeAgent true
         allOf {
