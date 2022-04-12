@@ -85,7 +85,7 @@ pipeline {
             sh ''' 
             [ ! -f BUILDNEWCONTAINER.txt ] || \
             /kaniko/executor --dockerfile=Dockerfile \
-                             --context=git://github.com/robinmordasiewicz/sphinx.git \
+                             --context=`pwd` \
                              --destination=robinhoodis/sphinx:`cat VERSION` \
                              --destination=robinhoodis/sphinx:latest \
                              --cache=true
