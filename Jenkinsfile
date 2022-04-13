@@ -46,12 +46,13 @@ pipeline {
     stage('Increment VERSION') {
       when {
         beforeAgent true
-        anyOf {
-          allOf {
-            not {changeset "VERSION"} 
+        allOf {
+          anyOf {
             changeset "Dockerfile"
+            changeset "requirements.txt"
           }
-          triggeredBy cause: 'UserIdCause'
+          // triggeredBy cause: 'UserIdCause'
+          not {changeset "VERSION"} 
         }
       }
       steps {
@@ -97,12 +98,13 @@ pipeline {
     stage('Commit new VERSION') {
       when {
         beforeAgent true
-        anyOf {
-          allOf {
-            not {changeset "VERSION"}
+        allOf {
+          anyOf {
             changeset "Dockerfile"
+            changeset "requirements.txt"
           }
-          triggeredBy cause: 'UserIdCause'
+          // triggeredBy cause: 'UserIdCause'
+          not {changeset "VERSION"}
         }
       }
 //      when {
