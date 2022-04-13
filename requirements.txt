@@ -26,7 +26,6 @@ sphinxcontrib-mermaid
 sphinxcontrib-nwdiag
 sphinxcontrib-serializinghtml
 sphinxcontrib-youtube
-sphinxcontrib-yt
 sphinxjp.themes.basicstrap>=0.5.0
 sphinxprettysearchresults
 tornado==3.2
