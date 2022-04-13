@@ -71,15 +71,23 @@ pipeline {
     stage('Build/Push Container') {
       when {
         beforeAgent true
-        anyOf {
-          //expression {
-          //  sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 1
-          //}
-          expression { 
-            sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
+        expression {
+          container('ubuntu') {
+            sh(returnStatus: true, script: 'skopeo inspect docker://docker.io/robinhoodis/sphinx:`cat VERSION`') == 1
           }
         }
       }
+      //when {
+      //  beforeAgent true
+      //  anyOf {
+      //    //expression {
+      //    //  sh(returnStatus: true, script: 'git status --porcelain | grep --quiet "BUILDNEWCONTAINER.txt"') == 1
+      //    //}
+      //    expression { 
+      //      sh(returnStatus: true, script: '[ -f BUILDNEWCONTAINER.txt ]') == 0
+      //    }
+      //  }
+      //}
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           script {
