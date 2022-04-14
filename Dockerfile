@@ -135,5 +135,5 @@ RUN mkdir -p /home/docs/.asdf/installs/python && \
     mkdir -p /home/docs/.asdf/installs/rust && \
     mkdir -p /home/docs/.asdf/installs/golang
 
-USER root
+USER 1000:1000
 CMD ["/bin/bash"]
