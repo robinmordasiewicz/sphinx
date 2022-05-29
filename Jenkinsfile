@@ -1,7 +1,4 @@
 pipeline {
-  environment {
-    currentBuild.result1 = 'NOT_BUILT'
-  }
   options {
     disableConcurrentBuilds()
     skipDefaultCheckout(true)
@@ -39,12 +36,15 @@ pipeline {
         '''
     }
   }
+  environment {
+    currentBuild.result1 = 'NOT_BUILTS'
+  }
   stages {
     stage('INIT') {
       steps {
         cleanWs()
         checkout scm
-        echo "currentBuild.result11: '${currentBuild.result1}'"
+        echo "currentBuild.result1: '${currentBuild.result}'"
         sh 'printenv'
       }
     }
