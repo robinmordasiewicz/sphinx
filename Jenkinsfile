@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    currentBuild.result = "NOT_BUILT"
+    currentBuild.result1 = "NOT_BUILT"
   }
   options {
     disableConcurrentBuilds()
@@ -44,7 +44,7 @@ pipeline {
       steps {
         cleanWs()
         checkout scm
-        echo "currentBuild.result1: '${currentBuild.result}'"
+        echo "currentBuild.result11: '${currentBuild.result1}'"
         sh 'printenv'
       }
     }
@@ -124,9 +124,9 @@ pipeline {
           sh 'git push origin HEAD:main'
         }
         script {
-          currentBuild.result = "SUCCESS"
+          currentBuild.result1 = "SUCCESS"
         }
-        echo "currentBuild.result: '${currentBuild.result}'"
+        echo "currentBuild.result1: '${currentBuild.result1}'"
       }
     }
   }
