@@ -41,7 +41,7 @@ pipeline {
       steps {
         cleanWs()
         checkout scm
-        currentBuild.result = 'NOT_BUILT'
+        echo "currentBuild.result1: '${currentBuild.result}'"
       }
     }
     stage('Increment VERSION') {
@@ -119,7 +119,7 @@ pipeline {
           // sh 'git diff --quiet HEAD || git push origin HEAD:main'
           sh 'git push origin HEAD:main'
         }
-        currentBuild.result = 'SUCCESS'
+        echo "currentBuild.result1: '${currentBuild.result}'"
       }
     }
   }
