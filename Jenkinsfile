@@ -36,11 +36,11 @@ pipeline {
         '''
     }
   }
-  environment {
-    currentBuild.result1 = 'NOT_BUILTS'
-  }
   stages {
     stage('INIT') {
+      environment {
+        currentBuild.result1 = 'NOT_BUILT'
+      }
       steps {
         cleanWs()
         checkout scm
