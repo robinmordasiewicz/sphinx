@@ -13,7 +13,7 @@ WORKDIR /
 RUN apt-get -y update
 RUN apt-get -y install \
       software-properties-common \
-      vim
+      vim apt-utils
 
 # Install requirements
 RUN apt-get -y install \
