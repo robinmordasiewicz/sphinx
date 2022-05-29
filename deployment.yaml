@@ -6,7 +6,7 @@ metadata:
     app: sphinx
 spec:
   containers:
-  - image: robinhoodis/sphinx:0.0.50
+  - image: robinhoodis/sphinx:0.0.53
     command:
       - "sleep"
       - "604800"
