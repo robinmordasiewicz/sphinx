@@ -85,6 +85,9 @@ pipeline {
             '''
           }
         }
+        script {
+          currentBuild.result = "SUCCESS"
+        }
       }
     }
     stage('Commit new VERSION') {
@@ -95,8 +98,7 @@ pipeline {
             changeset "Dockerfile"
             changeset "requirements.txt"
           }
-          // triggeredBy cause: 'UserIdCause'
-          not {changeset "VERSION"}
+          not {changeset "VERSION"} 
         }
       }
 //      when {
