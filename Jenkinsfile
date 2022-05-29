@@ -38,10 +38,10 @@ pipeline {
   }
   stages {
     stage('INIT') {
-      script {
-        currentBuild.result1 = 'NOT_BUILT'
-      }
       steps {
+        script {
+          currentBuild.result1 = 'NOT_BUILT'
+        }
         cleanWs()
         checkout scm
         echo "currentBuild.result1: '${currentBuild.result}'"
