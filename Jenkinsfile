@@ -62,6 +62,9 @@ pipeline {
         container('ubuntu') {
           sh 'sh increment-version.sh'
         }
+        script {
+          currentBuild.incremented = 'true'
+        }
       }
     }
     stage('Build/Push Container') {
@@ -93,13 +96,14 @@ pipeline {
     stage('Commit new VERSION') {
       when {
         beforeAgent true
-        allOf {
-          anyOf {
-            changeset "Dockerfile"
-            changeset "requirements.txt"
-          }
-          not {changeset "VERSION"} 
-        }
+        expression {currentBuild.incremented == 'true'}
+//        allOf {
+//          anyOf {
+//            changeset "Dockerfile"
+//            changeset "requirements.txt"
+//          }
+//          not {changeset "VERSION"} 
+//        }
       }
 //      when {
 //        beforeAgent true
