@@ -120,23 +120,23 @@ pipeline {
         }
       }
     }
-    stage('clone make-html repo') {
+    stage('clone nginx repo') {
       steps {
-        dir ( 'make-html' ) {
-          git branch: 'main', url: 'https://github.com/robinmordasiewicz/make-html.git'
+        dir ( 'nginx' ) {
+          git branch: 'main', url: 'https://github.com/robinmordasiewicz/nginx.git'
         }
       }
     }
-    stage('Update make-html Jenkinsfile') {
+    stage('Update nginx Jenkinsfile') {
       steps {
-        dir ( 'make-html' ) {
+        dir ( 'nginx' ) {
           container('ubuntu') {
             sh 'sh increment-version.sh'
           }
         }
       }
     }
-    stage('Commit Jenkinsfile to make-html') {
+    stage('Commit Jenkinsfile to nginx') {
 //      when {
 //        beforeAgent true
 //        anyOf {
@@ -148,7 +148,7 @@ pipeline {
 //        }
 //      }
       steps {
-        dir ( 'make-html' ) {
+        dir ( 'nginx' ) {
           sh 'git config user.email "robin@mordasiewicz.com"'
           sh 'git config user.name "Robin Mordasiewicz"'
           // sh 'git add .'
@@ -164,7 +164,7 @@ pipeline {
     }
     stage('clean up') {
       steps {
-        sh 'rm -rf make-html'
+        sh 'rm -rf nginx'
       }
     }
   }
