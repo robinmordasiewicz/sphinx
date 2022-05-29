@@ -8,13 +8,11 @@ ENV LANG C.UTF-8
 USER root
 WORKDIR /
 
-# System dependencies
 RUN apt-get -y update
 RUN apt-get -y install \
       software-properties-common \
       vim apt-utils
 
-# Install requirements
 RUN apt-get -y install \
       build-essential \
       bzr \
