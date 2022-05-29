@@ -108,12 +108,13 @@ RUN apt-get install -y \
 RUN groupadd --gid 1000 ubuntu
 RUN useradd -m --uid 1000 --gid 1000 ubuntu
 
+RUN apt install -y python3-pip python3-sphinx
 COPY requirements.txt /tmp/
-RUN apt install -y python3-pip python3-sphinx && \
-    pip3 install -r /tmp/requirements.txt --ignore-installed
 
-USER ubuntu
+USER ubuntu:ubuntu
 WORKDIR /home/ubuntu
+
+RUN pip3 install -r /tmp/requirements.txt --ignore-installed
 
 # Install asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --branch v0.9.0
