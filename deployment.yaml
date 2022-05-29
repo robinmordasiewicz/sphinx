@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sphinx
+  labels:
+    app: sphinx
+spec:
+  containers:
+  - image: robinhoodis/sphinx:0.0.50
+    command:
+      - "sleep"
+      - "604800"
+    imagePullPolicy: Always
+    name: sphinx
+  restartPolicy: Always

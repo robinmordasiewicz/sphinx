@@ -6,5 +6,5 @@ set -ex
 # docker hub username
 USERNAME=robinhoodis
 # image name
-IMAGE=sphinx-build
+IMAGE=sphinx
 docker build -t $USERNAME/$IMAGE:latest .
