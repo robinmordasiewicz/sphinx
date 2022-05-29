@@ -1,6 +1,6 @@
 pipeline {
   options {
-    disableConcurrentBuilds(abortPrevious: true)
+    disableConcurrentBuilds()
     skipDefaultCheckout(true)
   }
   agent {
