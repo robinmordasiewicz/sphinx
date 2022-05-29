@@ -38,7 +38,7 @@ pipeline {
   }
   stages {
     stage('INIT') {
-      environment {
+      script {
         currentBuild.result1 = 'NOT_BUILT'
       }
       steps {
