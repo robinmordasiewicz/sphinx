@@ -109,7 +109,7 @@ RUN groupadd --gid 205 docs
 RUN useradd -m --uid 1005 --gid 205 docs
 
 COPY requirements.txt /tmp/
-RUN apt install -y python3-pip && \
+RUN apt install -y python3-pip python3-sphinx && \
     pip3 install -r /tmp/requirements.txt --ignore-installed
 
 USER docs
