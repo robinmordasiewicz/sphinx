@@ -42,6 +42,7 @@ pipeline {
         cleanWs()
         checkout scm
         echo "currentBuild.result1: '${currentBuild.result}'"
+        sh 'printenv'
       }
     }
     stage('Increment VERSION') {
