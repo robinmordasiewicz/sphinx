@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    currentBuild.result1 = "NOT_BUILT"
+    currentBuild.result1 = 'NOT_BUILT'
   }
   options {
     disableConcurrentBuilds()
