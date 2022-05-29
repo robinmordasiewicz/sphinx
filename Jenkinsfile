@@ -42,6 +42,7 @@ pipeline {
         script {
           currentBuild.result = 'NOT_BUILT'
         }
+        echo "build result = ${currentBuild.result}"
         cleanWs()
         checkout scm
       }
@@ -120,6 +121,7 @@ pipeline {
           // sh 'git diff --quiet HEAD || git push origin HEAD:main'
           sh 'git push origin HEAD:main'
         }
+        echo "build result = ${currentBuild.result}"
         script {
           currentBuild.result = "SUCCESS"
         }
