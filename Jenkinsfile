@@ -44,8 +44,6 @@ pipeline {
         }
         cleanWs()
         checkout scm
-        echo "currentBuild.result: '${currentBuild.result}'"
-        sh 'printenv'
       }
     }
     stage('Increment VERSION') {
@@ -56,7 +54,6 @@ pipeline {
             changeset "Dockerfile"
             changeset "requirements.txt"
           }
-          // triggeredBy cause: 'UserIdCause'
           not {changeset "VERSION"} 
         }
       }
