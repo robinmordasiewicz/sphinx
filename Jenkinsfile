@@ -40,11 +40,11 @@ pipeline {
     stage('INIT') {
       steps {
         script {
-          currentBuild.result1 = 'NOT_BUILT'
+          currentBuild.result = 'NOT_BUILT'
         }
         cleanWs()
         checkout scm
-        echo "currentBuild.result1: '${currentBuild.result}'"
+        echo "currentBuild.result: '${currentBuild.result}'"
         sh 'printenv'
       }
     }
@@ -124,9 +124,8 @@ pipeline {
           sh 'git push origin HEAD:main'
         }
         script {
-          currentBuild.result1 = "SUCCESS"
+          currentBuild.result = "SUCCESS"
         }
-        echo "currentBuild.result1: '${currentBuild.result1}'"
       }
     }
   }
