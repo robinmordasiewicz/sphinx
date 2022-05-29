@@ -1,4 +1,7 @@
 pipeline {
+  environment {
+    currentBuild.result = "NOT_BUILT"
+  }
   options {
     disableConcurrentBuilds()
     skipDefaultCheckout(true)
@@ -120,7 +123,10 @@ pipeline {
           // sh 'git diff --quiet HEAD || git push origin HEAD:main'
           sh 'git push origin HEAD:main'
         }
-        echo "currentBuild.result1: '${currentBuild.result}'"
+        script {
+          currentBuild.result = "SUCCESS"
+        }
+        echo "currentBuild.result: '${currentBuild.result}'"
       }
     }
   }
