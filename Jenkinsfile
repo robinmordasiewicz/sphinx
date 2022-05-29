@@ -120,53 +120,6 @@ pipeline {
         }
       }
     }
-    stage('clone nginx repo') {
-      steps {
-        dir ( 'nginx' ) {
-          git branch: 'main', url: 'https://github.com/robinmordasiewicz/nginx.git'
-        }
-      }
-    }
-    stage('Update nginx Jenkinsfile') {
-      steps {
-        dir ( 'nginx' ) {
-          container('ubuntu') {
-            sh 'sh increment-version.sh'
-          }
-        }
-      }
-    }
-    stage('Commit Jenkinsfile to nginx') {
-//      when {
-//        beforeAgent true
-//        anyOf {
-//          allOf {
-//            not {changeset "VERSION"}
-//            changeset "Dockerfile"
-//          }
-//          triggeredBy cause: 'UserIdCause'
-//        }
-//      }
-      steps {
-        dir ( 'nginx' ) {
-          sh 'git config user.email "robin@mordasiewicz.com"'
-          sh 'git config user.name "Robin Mordasiewicz"'
-          // sh 'git add .'
-          // sh 'git diff --quiet && git diff --staged --quiet || git commit -m "`cat ../VERSION`"'
-          sh 'git add . && git diff --staged --quiet || git commit -m "`cat ../VERSION`"'
-          withCredentials([gitUsernamePassword(credentialsId: 'github-pat', gitToolName: 'git')]) {
-            // sh 'git diff --quiet && git diff --staged --quiet || git push origin HEAD:main'
-            // sh 'git diff --quiet HEAD || git push origin HEAD:main'
-            sh 'git push origin HEAD:main'
-          }
-        }
-      }
-    }
-    stage('clean up') {
-      steps {
-        sh 'rm -rf nginx'
-      }
-    }
   }
   post {
     always {
