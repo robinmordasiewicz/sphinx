@@ -105,23 +105,23 @@ RUN apt-get install -y \
     coreutils
 
 # UID and GID from readthedocs/user
-RUN groupadd --gid 205 docs
-RUN useradd -m --uid 1005 --gid 205 docs
+RUN groupadd --gid 1000 ubuntu
+RUN useradd -m --uid 1000 --gid 1000 ubuntu
 
 COPY requirements.txt /tmp/
 RUN apt install -y python3-pip python3-sphinx && \
     pip3 install -r /tmp/requirements.txt --ignore-installed
 
-USER docs
-WORKDIR /home/docs
+USER ubuntu
+WORKDIR /home/ubuntu
 
 # Install asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --branch v0.9.0
-RUN echo ". /home/docs/.asdf/asdf.sh" >> /home/docs/.bashrc
-RUN echo ". /home/docs/.asdf/completions/asdf.bash" >> /home/docs/.bashrc
+RUN echo ". /home/ubuntu/.asdf/asdf.sh" >> /home/ubuntu/.bashrc
+RUN echo ". /home/ubuntu/.asdf/completions/asdf.bash" >> /home/ubuntu/.bashrc
 
 # Activate asdf in current session
-ENV PATH /home/docs/.asdf/shims:/home/docs/.asdf/bin:$PATH
+ENV PATH /home/ubuntu/.asdf/shims:/home/ubuntu/.asdf/bin:$PATH
 
 # Install asdf plugins
 RUN asdf plugin add python
@@ -130,10 +130,9 @@ RUN asdf plugin add rust https://github.com/code-lever/asdf-rust.git
 RUN asdf plugin add golang https://github.com/kennyp/asdf-golang.git
 
 # Create directories for languages installations
-RUN mkdir -p /home/docs/.asdf/installs/python && \
-    mkdir -p /home/docs/.asdf/installs/nodejs && \
-    mkdir -p /home/docs/.asdf/installs/rust && \
-    mkdir -p /home/docs/.asdf/installs/golang
+RUN mkdir -p /home/ubuntu/.asdf/installs/python && \
+    mkdir -p /home/ubuntu/.asdf/installs/nodejs && \
+    mkdir -p /home/ubuntu/.asdf/installs/rust && \
+    mkdir -p /home/ubuntu/.asdf/installs/golang
 
-USER 1000:1000
 CMD ["/bin/bash"]
