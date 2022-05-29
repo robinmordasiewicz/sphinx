@@ -69,6 +69,7 @@ RUN apt-get -y install \
 # fonts-noto-cjk-extra
 # fonts-hanazono: chinese fonts
 # https://github.com/readthedocs/readthedocs.org/issues/6319
+
 RUN apt-get -y install \
     fonts-symbola \
     lmodern \
