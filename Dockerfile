@@ -109,10 +109,11 @@ RUN useradd -m --uid 1000 --gid 1000 ubuntu
 RUN apt install -y python3-pip python3-sphinx
 COPY requirements.txt /tmp/
 
+#RUN pip3 install -r /tmp/requirements.txt --ignore-installed
+RUN pip3 install -r /tmp/requirements.txt
+
 USER ubuntu:ubuntu
 WORKDIR /home/ubuntu
-
-RUN pip3 install -r /tmp/requirements.txt --ignore-installed
 
 # Install asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --branch v0.9.0
@@ -134,4 +135,4 @@ RUN mkdir -p /home/ubuntu/.asdf/installs/python && \
     mkdir -p /home/ubuntu/.asdf/installs/rust && \
     mkdir -p /home/ubuntu/.asdf/installs/golang
 
-CMD ["/bin/bash"]
+#CMD ["/bin/bash"]

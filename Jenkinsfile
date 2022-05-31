@@ -132,11 +132,6 @@ pipeline {
         }
       }
     }
-    stage('show build result') {
-      steps {
-        echo "build result = ${currentBuild.result}"
-      }
-    }
   }
   post {
     always {
