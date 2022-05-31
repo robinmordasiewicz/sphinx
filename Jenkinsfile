@@ -72,10 +72,13 @@ pipeline {
     stage('Build/Push Container') {
       when {
         beforeAgent true
-        expression {
-          container('ubuntu') {
-            sh(returnStatus: true, script: 'skopeo inspect docker://docker.io/robinhoodis/sphinx:`cat VERSION`') == 1
+        allOf {
+          expression {
+            container('ubuntu') {
+              sh(returnStatus: true, script: 'skopeo inspect docker://docker.io/robinhoodis/sphinx:`cat VERSION`') == 1
+            }
           }
+          expression {currentBuild.result != 'NOT_BUILT'}
         }
       }
       steps {
