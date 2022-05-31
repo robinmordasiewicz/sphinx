@@ -37,12 +37,23 @@ pipeline {
     }
   }
   stages {
-    stage('INIT') {
+    stage('bypass') {
+      when {
+        beforeAgent true
+        changeset "VERSION"
+      }
       steps {
         script {
           currentBuild.result = 'NOT_BUILT'
         }
-        echo "build result = ${currentBuild.result}"
+      }
+    }
+    stage('INIT') {
+      when {
+        beforeAgent true
+        expression {currentBuild.result != 'NOT_BUILT'}
+      }
+      steps {
         cleanWs()
         checkout scm
       }
@@ -50,20 +61,11 @@ pipeline {
     stage('Increment VERSION') {
       when {
         beforeAgent true
-        allOf {
-          anyOf {
-            changeset "Dockerfile"
-            changeset "requirements.txt"
-          }
-          not {changeset "VERSION"} 
-        }
+        expression {currentBuild.result != 'NOT_BUILT'}
       }
       steps {
         container('ubuntu') {
           sh 'sh increment-version.sh'
-        }
-        script {
-          currentBuild.incremented = 'true'
         }
       }
     }
@@ -91,19 +93,13 @@ pipeline {
         script {
           currentBuild.result = "SUCCESS"
         }
+        echo "kaniko stage result = ${currentBuild.result}"
       }
     }
     stage('Commit new VERSION') {
       when {
         beforeAgent true
-        expression {currentBuild.incremented == 'true'}
-//        allOf {
-//          anyOf {
-//            changeset "Dockerfile"
-//            changeset "requirements.txt"
-//          }
-//          not {changeset "VERSION"} 
-//        }
+        expression {currentBuild.result != 'NOT_BUILT'}
       }
 //      when {
 //        beforeAgent true
