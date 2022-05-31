@@ -6,7 +6,7 @@ cloud_sptheme
 colorama
 commonmark
 sphinx-favicon
-f5-sphinx-theme>=2.1.1
+f5-sphinx-theme>=2.2.1
 git+https://github.com/nerdoftech/s3_index_generator.git@0.2.0
 gitpython
 graphviz
