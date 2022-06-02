@@ -27,6 +27,7 @@ sphinxcontrib-nwdiag
 sphinxcontrib-serializinghtml
 sphinxcontrib-youtube
 sphinxcontrib-video
+sphinxcontrib-slide
 sphinxjp.themes.basicstrap>=0.5.0
 sphinxprettysearchresults
 tornado==3.2
