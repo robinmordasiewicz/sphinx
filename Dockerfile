@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 LABEL mantainer="Read the Docs <support@readthedocs.com>"
-LABEL version="0.0.52"
+LABEL version="0.0.53"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
@@ -112,6 +112,11 @@ COPY requirements.txt /tmp/
 #RUN pip3 install -r /tmp/requirements.txt --ignore-installed
 RUN pip3 install -r /tmp/requirements.txt
 
+# Install terraform
+RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+RUN apt-get install -y terraform
+
 USER ubuntu:ubuntu
 WORKDIR /home/ubuntu
 
@@ -134,5 +139,7 @@ RUN mkdir -p /home/ubuntu/.asdf/installs/python && \
     mkdir -p /home/ubuntu/.asdf/installs/nodejs && \
     mkdir -p /home/ubuntu/.asdf/installs/rust && \
     mkdir -p /home/ubuntu/.asdf/installs/golang
+
+
 
 #CMD ["/bin/bash"]
