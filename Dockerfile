@@ -103,8 +103,8 @@ RUN apt-get install -y \
     coreutils
 
 # UID and GID from readthedocs/user
-RUN groupadd --gid 1000 ubuntu
-RUN useradd -m --uid 1000 --gid 1000 ubuntu
+# RUN groupadd --gid 1000 ubuntu
+# RUN useradd -m --uid 1000 --gid 1000 ubuntu
 
 RUN apt install -y python3-pip python3-sphinx
 COPY requirements.txt /tmp/
@@ -117,29 +117,40 @@ RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 RUN apt-get install -y terraform
 
-USER ubuntu:ubuntu
-WORKDIR /home/ubuntu
+## Install sudo
+#RUN apt-get install -y sudo
+#RUN adduser ubuntu sudo 
+#RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Install asdf
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --branch v0.9.0
-RUN echo ". /home/ubuntu/.asdf/asdf.sh" >> /home/ubuntu/.bashrc
-RUN echo ". /home/ubuntu/.asdf/completions/asdf.bash" >> /home/ubuntu/.bashrc
+# Install gosu
+RUN apt-get install -y gosu
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Activate asdf in current session
-ENV PATH /home/ubuntu/.asdf/shims:/home/ubuntu/.asdf/bin:$PATH
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-# Install asdf plugins
-RUN asdf plugin add python
-RUN asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-RUN asdf plugin add rust https://github.com/code-lever/asdf-rust.git
-RUN asdf plugin add golang https://github.com/kennyp/asdf-golang.git
+# USER ubuntu:ubuntu
+# WORKDIR /home/ubuntu
+#
+## Install asdf
+#RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --branch v0.9.0
+#RUN echo ". /home/ubuntu/.asdf/asdf.sh" >> /home/ubuntu/.bashrc
+#RUN echo ". /home/ubuntu/.asdf/completions/asdf.bash" >> /home/ubuntu/.bashrc
 
-# Create directories for languages installations
-RUN mkdir -p /home/ubuntu/.asdf/installs/python && \
-    mkdir -p /home/ubuntu/.asdf/installs/nodejs && \
-    mkdir -p /home/ubuntu/.asdf/installs/rust && \
-    mkdir -p /home/ubuntu/.asdf/installs/golang
+## Activate asdf in current session
+#ENV PATH /home/ubuntu/.asdf/shims:/home/ubuntu/.asdf/bin:$PATH
 
+## Install asdf plugins
+#RUN asdf plugin add python
+#RUN asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+#RUN asdf plugin add rust https://github.com/code-lever/asdf-rust.git
+#RUN asdf plugin add golang https://github.com/kennyp/asdf-golang.git
 
+## Create directories for languages installations
+#RUN mkdir -p /home/ubuntu/.asdf/installs/python && \
+#    mkdir -p /home/ubuntu/.asdf/installs/nodejs && \
+#    mkdir -p /home/ubuntu/.asdf/installs/rust && \
+#    mkdir -p /home/ubuntu/.asdf/installs/golang
 
 #CMD ["/bin/bash"]
+
