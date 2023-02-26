@@ -115,6 +115,7 @@ RUN pip3 install -r /tmp/requirements.txt
 # Install terraform
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+RUN apt-get -y update
 RUN apt-get install -y terraform
 
 ## Install sudo
