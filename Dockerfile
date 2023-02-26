@@ -113,7 +113,10 @@ COPY requirements.txt /tmp/
 RUN pip3 install -r /tmp/requirements.txt
 
 # Install terraform
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+#RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
+    gpg --dearmor | \
+    sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
 RUN apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 RUN apt-get -y update
 RUN apt-get install -y terraform
